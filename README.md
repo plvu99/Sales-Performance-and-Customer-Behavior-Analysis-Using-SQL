@@ -24,9 +24,8 @@ The project uses a relational retail sales dataset consisting of multiple interc
 
 | Table              | Description     | 
 | ------------------ | --------------- | 
-| Customers | * Customer information
-* Credit limits
-* Location data     |
+| Customers | * Customer information * Credit limits * Location data | 
+
 | **LightGBM**       | **500.82** | 
 | XGBoost            | 503.78     | 
 | Neural Networks    | 502.45     | 
