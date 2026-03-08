@@ -118,9 +118,9 @@ Example:
 SELECT customerName, 
        creditLimit,
        CASE WHEN creditLimit < 39800 THEN 'Low'
-	    WHEN creditLimit >= 39800 AND creditLimit < 76400 THEN 'Medium'
-	    ELSE 'High'	
-       END AS creditRank
+			WHEN creditLimit >= 39800 AND creditLimit < 76400 THEN 'Medium'
+			ELSE 'High'
+		END AS creditRank
 FROM customers
 ```
 
@@ -132,21 +132,21 @@ Example:
 
 ```sql
 WITH office_num AS (SELECT e.officeCode, SUM(employee_num.totalRevenue2) AS totalRevenue3
-	             FROM employees e
-                    INNER JOIN (SELECT c.salesRepEmployeeNumber AS employeeNumber, SUM(customer_num.totalRevenue) AS totalRevenue2 
-                                FROM customers c
-				    INNER JOIN (SELECT o.customerNumber, SUM(o2.totalValue) AS totalRevenue 
-                                            FROM orders o
-					         LEFT JOIN (SELECT orderNumber, SUM(quantityOrdered * priceEach) AS totalValue
-						             FROM orderdetails
-                                                       GROUP BY orderNumber) AS o2
-                                            ON o.orderNumber = o2.orderNumber
-					         WHERE YEAR(o.orderDate) = 2004 AND o.status = 'Shipped'
-					         GROUP BY o.customerNumber) AS customer_num
-                                ON c.customerNumber = customer_num.customerNumber 
-                                GROUP BY c.salesRepEmployeeNumber) AS employee_num
-		      ON e.employeeNumber = employee_num.employeeNumber 
-		      GROUP BY e.officeCode)
+					FROM employees e
+					INNER JOIN (SELECT c.salesRepEmployeeNumber AS employeeNumber, SUM(customer_num.totalRevenue) AS totalRevenue2
+								FROM customers c
+								INNER JOIN (SELECT o.customerNumber, SUM(o2.totalValue) AS totalRevenue
+											FROM orders o
+											LEFT JOIN (SELECT orderNumber, SUM(quantityOrdered * priceEach) AS totalValue
+														FROM orderdetails
+														GROUP BY orderNumber) AS o2
+											ON o.orderNumber = o2.orderNumber
+											WHERE YEAR(o.orderDate) = 2004 AND o.status = 'Shipped'
+											GROUP BY o.customerNumber) AS customer_num
+								ON c.customerNumber = customer_num.customerNumber 
+								GROUP BY c.salesRepEmployeeNumber) AS employee_num
+					ON e.employeeNumber = employee_num.employeeNumber 
+					GROUP BY e.officeCode)
 		SELECT office_num.officeCode, o3.city, office_num.totalRevenue3
 		FROM office_num
 		LEFT JOIN offices o3
