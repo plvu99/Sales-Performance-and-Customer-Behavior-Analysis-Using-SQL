@@ -2,7 +2,7 @@
 
 ## 🔎 Overview
 
-This project analyzes sales performance and customer behavior using relational data from a retail sales database. By leveraging SQL queries across multiple tables—including orders, customers, employees, products, and payments—the analysis uncovers patterns in revenue generation, customer purchasing behavior, and sales performance.
+This project analyzes **sales performance and customer behavior using relational data from a retail sales database.** By **leveraging SQL queries across multiple tables**—including orders, customers, employees, products, and payments—the analysis uncovers patterns in revenue generation, customer purchasing behavior, and sales performance.
 
 The goal is to demonstrate how SQL can be used to transform transactional data into actionable insights that support business decision-making in areas such as sales strategy, inventory management, and customer segmentation.
 
@@ -28,11 +28,14 @@ The project uses a relational retail sales dataset consisting of multiple interc
 * Credit limits
 * Location data
 
-**Orders**
+**Employees**
 
-* Order numbers
-* Order dates
-* Order status
+* Sales representatives responsible for customers
+* Employee information
+
+**Offices**
+
+* Company office locations and organizational structure
 
 **Order Details**
 
@@ -40,13 +43,15 @@ The project uses a relational retail sales dataset consisting of multiple interc
 * Quantity ordered
 * Price per item
 
+**Orders**
+
+* Order numbers
+* Order dates
+* Order status
+
 **Payments**
 
 * Payment transactions made by customers
-
-**Employees**
-
-* Sales representatives responsible for customers
 
 **Products**
 
@@ -54,16 +59,15 @@ The project uses a relational retail sales dataset consisting of multiple interc
 * Stock levels
 * Buy prices
 
-**Offices**
-
-* Company office locations and organizational structure
-
 These tables are connected through relational keys such as:
 
 * `customerNumber`
-* `orderNumber`
 * `employeeNumber`
+* `orderNumber`
 * `officeCode`
+* `productCode`
+
+<img width="603" height="717" alt="Screenshot 2026-03-08 at 12 32 21 AM" src="https://github.com/user-attachments/assets/72b0573f-760c-4b15-aa7a-c5022a6dc6d5" />
 
 ## 📍 Methodology
 
@@ -111,16 +115,44 @@ Classifying customers based on credit limits.
 Example:
 
 ```sql
-CASE
-WHEN creditLimit < 39800 THEN 'Low'
-WHEN creditLimit < 76400 THEN 'Medium'
-ELSE 'High'
-END
+SELECT customerName, 
+       creditLimit,
+       CASE WHEN creditLimit < 39800 THEN 'Low'
+	    WHEN creditLimit >= 39800 AND creditLimit < 76400 THEN 'Medium'
+	    ELSE 'High'	
+       END AS creditRank
+FROM customers
 ```
 
 ### Performance Ranking
 
-Ranking employees and offices by revenue using advanced queries and Common Table Expressions (CTEs).
+Ranking employees and offices by revenue using multi-table joins and Common Table Expressions (CTEs).
+
+Example:
+
+```sql
+WITH office_num AS (SELECT e.officeCode, SUM(employee_num.totalRevenue2) AS totalRevenue3
+	             FROM employees e
+                    INNER JOIN (SELECT c.salesRepEmployeeNumber AS employeeNumber, SUM(customer_num.totalRevenue) AS totalRevenue2 
+                                FROM customers c
+				    INNER JOIN (SELECT o.customerNumber, SUM(o2.totalValue) AS totalRevenue 
+                                            FROM orders o
+					         LEFT JOIN (SELECT orderNumber, SUM(quantityOrdered * priceEach) AS totalValue
+						             FROM orderdetails
+                                                       GROUP BY orderNumber) AS o2
+                                            ON o.orderNumber = o2.orderNumber
+					         WHERE YEAR(o.orderDate) = 2004 AND o.status = 'Shipped'
+					         GROUP BY o.customerNumber) AS customer_num
+                                ON c.customerNumber = customer_num.customerNumber 
+                                GROUP BY c.salesRepEmployeeNumber) AS employee_num
+		      ON e.employeeNumber = employee_num.employeeNumber 
+		      GROUP BY e.officeCode)
+		SELECT office_num.officeCode, o3.city, office_num.totalRevenue3
+		FROM office_num
+		LEFT JOIN offices o3
+		ON office_num.officeCode = o3.officeCode
+		ORDER BY office_num.totalRevenue3 DESC 
+```
 
 ### Window Functions
 
@@ -129,70 +161,44 @@ Assigning rankings within groups.
 Example:
 
 ```sql
-ROW_NUMBER() OVER (PARTITION BY country)
+SELECT customerName,
+       country,
+       ROW_NUMBER () OVER (PARTITION BY country) AS rowNum
+FROM customers
 ```
-
-### Multi-table Joins
-
-Connecting relational tables to analyze end-to-end sales performance.
-
-Examples include joins across:
-
-* customers
-* orders
-* orderdetails
-* employees
-* offices
 
 ## 🔑 Key Insights
 
-### High-Value Customers Drive Significant Revenue
-
-A small subset of customers accounts for a large share of total payments, highlighting opportunities for targeted relationship management.
-
-### Order Value Distribution is Highly Uneven
-
-Some orders generate significantly higher revenue due to larger product quantities and higher pricing.
-
-### Sales Performance Varies Across Employees
-
-Sales representatives managing high-performing customers generate substantially higher revenue compared to others.
-
-### Inventory Risk Exists for Some Products
-
-Certain products have stock levels below the average while still maintaining relatively low purchase prices, indicating potential inventory management challenges.
-
-### Sales Trends Change Over Time
-
-Monthly order volumes fluctuate year-to-year, providing insight into potential seasonal demand patterns and sales growth trends.
-
-### Organizational Structure Impacts Sales
-
-Offices and managers overseeing larger teams often generate higher total revenue through their sales representatives.
+* A small subset of customers accounts for a large share of total payments, highlighting opportunities for targeted relationship management.
+* Some orders generate significantly higher revenue due to larger product quantities and higher pricing.
+* Sales representatives managing high-performing customers generate substantially higher revenue compared to others.
+* Certain products have stock levels below the average while still maintaining relatively low purchase prices, indicating potential inventory management challenges.
+* Monthly order volumes fluctuate year-to-year, providing insight into potential seasonal demand patterns and sales growth trends.
+* Offices and managers overseeing larger teams often generate higher total revenue through their sales representatives.
 
 ## ✍️ Business Recommendations
 
-### Focus on High-Value Customers
+### 1. Focus on High-Value Customers
 
 Implement targeted retention programs and personalized offers for top-spending customers to maintain long-term revenue growth.
 
-### Optimize Sales Representative Performance
+### 2. Optimize Sales Representative Performance
 
 Use performance analytics to identify best-performing sales representatives and replicate their strategies across the sales team.
 
-### Improve Inventory Monitoring
+### 3. Improve Inventory Monitoring
 
 Prioritize restocking products with low inventory levels and strong demand to avoid stock-out risks.
 
-### Monitor Monthly Sales Trends
+### 4. Monitor Monthly Sales Trends
 
 Analyze seasonal fluctuations to better align marketing campaigns and inventory planning with demand patterns.
 
-### Strengthen Regional Sales Strategy
+### 5. Strengthen Regional Sales Strategy
 
 Compare office-level performance to identify regions with growth potential and allocate resources accordingly.
 
-## ⚙ Tools & Technologies
+## ⚙ Tools & Techniques
 
 * SQL (MySQL)
 * Relational database analysis
