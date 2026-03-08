@@ -22,13 +22,6 @@ This project addresses these questions by analyzing relational sales data to ide
 
 The project uses a relational retail sales dataset consisting of multiple interconnected tables:
 
-| Table              | Description     | 
-| ------------------ | --------------- | 
-| Customers | * Customer information * Credit limits * Location data | 
-
-| **LightGBM**       | **500.82** | 
-| XGBoost            | 503.78     | 
-| Neural Networks    | 502.45     | 
 ### Customers
 
 * Customer information
