@@ -178,23 +178,23 @@ FROM customers
 
 ## ✍️ Business Recommendations
 
-### 1. Focus on High-Value Customers
+### 1. Focus on high-value customers
 
 Implement targeted retention programs and personalized offers for top-spending customers to maintain long-term revenue growth.
 
-### 2. Optimize Sales Representative Performance
+### 2. Optimize sales representative performance
 
 Use performance analytics to identify best-performing sales representatives and replicate their strategies across the sales team.
 
-### 3. Improve Inventory Monitoring
+### 3. Improve inventory monitoring
 
 Prioritize restocking products with low inventory levels and strong demand to avoid stock-out risks.
 
-### 4. Monitor Monthly Sales Trends
+### 4. Monitor monthly sales trends
 
 Analyze seasonal fluctuations to better align marketing campaigns and inventory planning with demand patterns.
 
-### 5. Strengthen Regional Sales Strategy
+### 5. Strengthen regional sales strategy
 
 Compare office-level performance to identify regions with growth potential and allocate resources accordingly.
 
