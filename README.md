@@ -22,38 +22,38 @@ This project addresses these questions by analyzing relational sales data to ide
 
 The project uses a relational retail sales dataset consisting of multiple interconnected tables:
 
-**Customers**
+### Customers
 
 * Customer information
 * Credit limits
 * Location data
 
-**Employees**
+### Employees
 
 * Sales representatives responsible for customers
 * Employee information
 
-**Offices**
+### Offices
 
 * Company office locations and organizational structure
 
-**Order Details**
+### Order Details
 
 * Products included in each order
 * Quantity ordered
 * Price per item
 
-**Orders**
+### Orders
 
 * Order numbers
 * Order dates
 * Order status
 
-**Payments**
+### Payments
 
 * Payment transactions made by customers
 
-**Products**
+### Products
 
 * Product catalog
 * Stock levels
