@@ -10,11 +10,11 @@ The goal is to demonstrate how SQL can be used to transform transactional data i
 
 Retail companies collect large volumes of transactional data, but without structured analysis it can be difficult to understand:
 
-* which customers generate the most revenue
-* which products or orders drive the highest sales value
-* which employees or offices perform best
-* how sales performance changes over time
-* which products may face inventory risks
+* Which customers generate the most revenue
+* Which products or orders drive the highest sales value
+* Which employees or offices perform best
+* How sales performance changes over time
+* Which products may face inventory risks
 
 This project addresses these questions by analyzing relational sales data to identify key performance drivers and operational opportunities.
 
@@ -77,9 +77,9 @@ The analysis uses SQL techniques including:
 
 Summarizing business metrics such as:
 
-* total sales revenue
-* number of orders
-* monthly order trends
+* Total sales revenue
+* Number of orders
+* Monthly order trends
 
 Example:
 
