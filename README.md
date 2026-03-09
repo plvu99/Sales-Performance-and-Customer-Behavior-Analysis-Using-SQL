@@ -2,7 +2,7 @@
 
 ## 🔎 Overview
 
-This project analyzes **sales performance and customer behavior using relational data from a retail sales database.** By **leveraging SQL queries across multiple tables**—including orders, customers, employees, products, and payments—the analysis uncovers patterns in revenue generation, customer purchasing behavior, and sales performance.
+This project analyzes sales performance and customer behavior using relational data from a retail sales database. By leveraging **SQL queries across multiple tables**—including orders, customers, employees, products, and payments—the analysis uncovers **patterns in revenue generation, customer purchasing behavior, and sales performance**.
 
 The goal is to demonstrate how SQL can be used to transform transactional data into actionable insights that support business decision-making in areas such as sales strategy, inventory management, and customer segmentation.
 
@@ -10,11 +10,11 @@ The goal is to demonstrate how SQL can be used to transform transactional data i
 
 Retail companies collect large volumes of transactional data, but without structured analysis it can be difficult to understand:
 
-* Which customers generate the most revenue
-* Which products or orders drive the highest sales value
-* Which employees or offices perform best
-* How sales performance changes over time
-* Which products may face inventory risks
+* which customers generate the most revenue
+* which products or orders drive the highest sales value
+* which employees or offices perform best
+* how sales performance changes over time
+* which products may face inventory risks
 
 This project addresses these questions by analyzing relational sales data to identify key performance drivers and operational opportunities.
 
@@ -201,7 +201,6 @@ Compare office-level performance to identify regions with growth potential and a
 ## ⚙ Tools & Techniques
 
 * SQL (MySQL)
-* Relational database analysis
 * Multi-table joins
 * Aggregations
 * Subqueries
